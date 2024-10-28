@@ -2,6 +2,18 @@
 
 Simple Discord Helper
 
+
+## ENV
+
+In order to use the env based config we need an env with the following vars
+
+```env
+DISCORD_CLIENT_ID=
+DISCORD_CLIENT_SECRET=
+DISCORD_REDIRECT_URI=http://localhost:8080/redirection-uri
+ACCESS_TOKEN=
+```
+
 ## Example
 
 Instance using dot env file
