@@ -7,7 +7,7 @@ pub struct DiscordAccessToken {
     pub expires_in: i64,
 }
 
-#[derive(Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct DiscordUser {
     pub id: String,
     pub username: String,
@@ -15,7 +15,7 @@ pub struct DiscordUser {
     pub locale: Option<String>,
 }
 
-#[derive(Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct DiscordUserComplete {
     pub id: String,
     pub username: String,
