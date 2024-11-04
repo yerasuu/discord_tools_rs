@@ -11,6 +11,14 @@ pub struct DiscordAccessToken {
 pub struct DiscordUser {
     pub id: String,
     pub username: String,
+    pub avatar: Option<String>,
+    pub locale: Option<String>,
+}
+
+#[derive(Deserialize, Debug)]
+pub struct DiscordUserComplete {
+    pub id: String,
+    pub username: String,
     pub discriminator: String,
     pub avatar: Option<String>,
     pub bot: Option<bool>,
