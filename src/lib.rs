@@ -2,10 +2,10 @@ pub mod crud;
 pub mod models;
 
 use dotenvy::dotenv;
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 use std::env;
 
-#[derive(Deserialize, Debug)]
+#[derive(Debug, Serialize, Deserialize, Default, Clone)]
 pub struct DiscordTools {
     pub discord_client_id: String,
     pub discord_client_secret: String,
