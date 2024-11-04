@@ -9,11 +9,36 @@ use crate::{
 
 impl DiscordTools {
     pub async fn get_token(self, authorization_code: String) -> Option<DiscordAccessToken> {
-        dotenv().ok();
+        Self::get_discord_token(
+            self.discord_client_id,
+            self.discord_client_secret,
+            self.discord_redirect_uri,
+            authorization_code
+        ).await
+    }
+
+    pub async fn get_user_info(access_token: &str) -> Result<DiscordUser, reqwest::Error> {
+        let client = Client::new();
+        let response = client
+            .get("https://discord.com/api/v10/users/@me")
+            .bearer_auth(access_token)
+            .send()
+            .await?;
+
+        let user: DiscordUser = response.json::<DiscordUser>().await?;
+        Ok(user)
+    }
+
+    pub async fn get_discord_token(
+        discord_client_id: String,
+        discord_client_secret: String,
+        discord_redirect_uri: String,
+        authorization_code: String,
+    ) -> Option<DiscordAccessToken> {
         // Obtén las credenciales de la aplicación Discord desde las variables de entorno
-        let client_id = self.discord_client_id;
-        let client_secret = self.discord_client_secret;
-        let redirect_uri = self.discord_redirect_uri;
+        let client_id = discord_client_id;
+        let client_secret = discord_client_secret;
+        let redirect_uri = discord_redirect_uri;
 
         let authorization_code_str = "authorization_code".to_string();
 
@@ -48,20 +73,5 @@ impl DiscordTools {
         } else {
             None
         }
-    }
-
-    pub async fn get_user_info(
-        self,
-        access_token: &str,
-    ) -> Result<DiscordUser, reqwest::Error> {
-        let client = Client::new();
-        let response = client
-            .get("https://discord.com/api/v10/users/@me")
-            .bearer_auth(access_token)
-            .send()
-            .await?;
-
-        let user: DiscordUser = response.json::<DiscordUser>().await?;
-        Ok(user)
     }
 }
